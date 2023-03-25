@@ -2,10 +2,14 @@ package com.kushanthsliit.shopmanagement.service.impl;
 
 import com.kushanthsliit.shopmanagement.model.BusinessRecord;
 import com.kushanthsliit.shopmanagement.repository.BusinessRecordRepository;
+import com.kushanthsliit.shopmanagement.response.SummaryResponse;
 import com.kushanthsliit.shopmanagement.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -16,7 +20,13 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public BusinessRecord addRecord(BusinessRecord businessRecord) {
-        return businessRecordRepository.save(businessRecord);
+        BusinessRecord br = businessRecordRepository.findByDate(businessRecord.getDate());
+        if(br == null){
+            return businessRecordRepository.save(businessRecord);
+        }
+        else {
+            return null;
+        }
     }
 
     @Override
@@ -64,5 +74,24 @@ public class ShopServiceImpl implements ShopService {
         else {
             return "Can not find Record...!";
         }
+    }
+
+    @Override
+    public SummaryResponse getSummary(String startDate, String endDate) {
+        return new SummaryResponse(
+                businessRecordRepository.getSumOfOysterSold(LocalDate.parse(startDate), LocalDate.parse(endDate)),
+                businessRecordRepository.getSumOfTobacoSold(LocalDate.parse(startDate), LocalDate.parse(endDate)),
+                businessRecordRepository.getSumOfTobacoSoldQuantity(LocalDate.parse(startDate), LocalDate.parse(endDate)),
+                businessRecordRepository.getSumOfPhoneCardsSold(LocalDate.parse(startDate), LocalDate.parse(endDate)),
+                businessRecordRepository.getSumOfZTotal(LocalDate.parse(startDate), LocalDate.parse(endDate)),
+                businessRecordRepository.getSumOfShopSales(LocalDate.parse(startDate), LocalDate.parse(endDate)),
+                businessRecordRepository.getSumOfShop(LocalDate.parse(startDate), LocalDate.parse(endDate)),
+                businessRecordRepository.getSumOfPhoneCardsPurchased(LocalDate.parse(startDate), LocalDate.parse(endDate)),
+                businessRecordRepository.getSumOfTobaccoPurchased(LocalDate.parse(startDate), LocalDate.parse(endDate)),
+                businessRecordRepository.getSumOfTobaccoPurchasedQuantity(LocalDate.parse(startDate), LocalDate.parse(endDate)),
+                businessRecordRepository.getSumOfWages(LocalDate.parse(startDate), LocalDate.parse(endDate)),
+                businessRecordRepository.getSumOfExpenses(LocalDate.parse(startDate), LocalDate.parse(endDate)),
+                businessRecordRepository.getSumOfCommition(LocalDate.parse(startDate), LocalDate.parse(endDate))
+        );
     }
 }

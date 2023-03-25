@@ -1,19 +1,37 @@
 package com.kushanthsliit.shopmanagement.controller;
 
 import com.kushanthsliit.shopmanagement.model.BusinessRecord;
+import com.kushanthsliit.shopmanagement.repository.BusinessRecordRepository;
+import com.kushanthsliit.shopmanagement.response.ApiResponse;
+import com.kushanthsliit.shopmanagement.response.SummaryResponse;
 import com.kushanthsliit.shopmanagement.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/shop")
+@CrossOrigin("*")
 public class ShopController {
 
     @Autowired
     private ShopService shopService;
+
+    @Autowired
+    private BusinessRecordRepository businessRecordRepository;
+
+    @GetMapping("/startDate/{startdate}/endDate/{enddate}")
+    public double test(@PathVariable String startdate, @PathVariable String enddate){
+        /*DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return LocalDateTime.now().format(dateTimeFormatter).toString()*/;
+
+        return businessRecordRepository.getSumOfCommition(LocalDate.parse(startdate),
+                LocalDate.parse(enddate));
+    }
 
     @GetMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password){
@@ -21,8 +39,8 @@ public class ShopController {
     }
 
     @PostMapping("/add-record")
-    public @ResponseBody ResponseEntity<BusinessRecord> addRecord(@RequestBody BusinessRecord businessRecord){
-        return ResponseEntity.ok(shopService.addRecord(businessRecord));
+    public @ResponseBody ResponseEntity<ApiResponse> addRecord(@RequestBody BusinessRecord businessRecord){
+        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK.value(), "Successfully Added." ,shopService.addRecord(businessRecord)));
     }
 
     @GetMapping("/get-all-records")
@@ -41,7 +59,15 @@ public class ShopController {
     }
 
     @DeleteMapping("/delete/id/{id}")
-    public @ResponseBody ResponseEntity<String> deleteRecord(@PathVariable long id){
-        return ResponseEntity.ok(shopService.deleteRecord(id));
+    public @ResponseBody ResponseEntity<ApiResponse<String>> deleteRecord(@PathVariable long id){
+        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK.value(), "SuccessFully Deleted",
+                shopService.deleteRecord(id)));
+    }
+
+    @GetMapping("/summary/startDate/{startDate}/endDate/{endDate}")
+    public @ResponseBody ResponseEntity<ApiResponse<SummaryResponse>> getSummaryBetweenDateRange(@PathVariable String startDate,
+                                                                                                 @PathVariable String endDate){
+        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK.value(), "Summary Retrieved Successfully.",
+                shopService.getSummary(startDate, endDate)));
     }
 }
