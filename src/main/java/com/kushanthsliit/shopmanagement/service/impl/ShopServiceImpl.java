@@ -2,7 +2,6 @@ package com.kushanthsliit.shopmanagement.service.impl;
 
 import com.kushanthsliit.shopmanagement.model.BusinessRecord;
 import com.kushanthsliit.shopmanagement.repository.BusinessRecordRepository;
-import com.kushanthsliit.shopmanagement.response.SummaryResponse;
 import com.kushanthsliit.shopmanagement.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,22 +74,8 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public SummaryResponse getSummary(String startDate, String endDate) {
-        return new SummaryResponse(
-                businessRecordRepository.getSumOfOysterSold(LocalDate.parse(startDate), LocalDate.parse(endDate)),
-                businessRecordRepository.getSumOfTobacoSold(LocalDate.parse(startDate), LocalDate.parse(endDate)),
-                businessRecordRepository.getSumOfTobacoSoldQuantity(LocalDate.parse(startDate), LocalDate.parse(endDate)),
-                businessRecordRepository.getSumOfPhoneCardsSold(LocalDate.parse(startDate), LocalDate.parse(endDate)),
-                businessRecordRepository.getSumOfZTotal(LocalDate.parse(startDate), LocalDate.parse(endDate)),
-                businessRecordRepository.getSumOfShopSales(LocalDate.parse(startDate), LocalDate.parse(endDate)),
-                businessRecordRepository.getSumOfShop(LocalDate.parse(startDate), LocalDate.parse(endDate)),
-                businessRecordRepository.getSumOfPhoneCardsPurchased(LocalDate.parse(startDate), LocalDate.parse(endDate)),
-                businessRecordRepository.getSumOfTobaccoPurchased(LocalDate.parse(startDate), LocalDate.parse(endDate)),
-                businessRecordRepository.getSumOfTobaccoPurchasedQuantity(LocalDate.parse(startDate), LocalDate.parse(endDate)),
-                businessRecordRepository.getSumOfWages(LocalDate.parse(startDate), LocalDate.parse(endDate)),
-                businessRecordRepository.getSumOfExpenses(LocalDate.parse(startDate), LocalDate.parse(endDate)),
-                businessRecordRepository.getSumOfCommition(LocalDate.parse(startDate), LocalDate.parse(endDate))
-        );
+    public BusinessRecordRepository.getAllSums getSummary(String startDate, String endDate) {
+        return businessRecordRepository.getAllSumBetweenDates(LocalDate.parse(startDate), LocalDate.parse(endDate));
     }
 
     @Override

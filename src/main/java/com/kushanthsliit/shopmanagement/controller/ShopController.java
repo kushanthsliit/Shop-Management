@@ -1,17 +1,14 @@
 package com.kushanthsliit.shopmanagement.controller;
 
-import com.kushanthsliit.shopmanagement.dto.SumResponse;
 import com.kushanthsliit.shopmanagement.model.BusinessRecord;
 import com.kushanthsliit.shopmanagement.repository.BusinessRecordRepository;
 import com.kushanthsliit.shopmanagement.response.ApiResponse;
-import com.kushanthsliit.shopmanagement.response.SummaryResponse;
 import com.kushanthsliit.shopmanagement.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -25,14 +22,10 @@ public class ShopController {
     @Autowired
     private BusinessRecordRepository businessRecordRepository;
 
-    /*@GetMapping("/startDate/{startdate}/endDate/{enddate}")
-    public SumResponse test(@PathVariable String startdate, @PathVariable String enddate){
-        *//*DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return LocalDateTime.now().format(dateTimeFormatter).toString()*//*;
-
-        return businessRecordRepository.getSum(LocalDate.parse(startdate),
-                LocalDate.parse(enddate));
-    }*/
+    @GetMapping("/startDate/{startdate}/endDate/{enddate}")
+    public String test(@PathVariable String startdate, @PathVariable String enddate){
+        return "Hi";
+    }
 
     @GetMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password){
@@ -66,7 +59,7 @@ public class ShopController {
     }
 
     @GetMapping("/summary/startDate/{startDate}/endDate/{endDate}")
-    public @ResponseBody ResponseEntity<ApiResponse<SummaryResponse>> getSummaryBetweenDateRange(@PathVariable String startDate,
+    public @ResponseBody ResponseEntity<ApiResponse<BusinessRecordRepository.getAllSums>> getSummaryBetweenDateRange(@PathVariable String startDate,
                                                                                                  @PathVariable String endDate){
         return ResponseEntity.ok(new ApiResponse(HttpStatus.OK.value(), "Summary Retrieved Successfully.",
                 shopService.getSummary(startDate, endDate)));
