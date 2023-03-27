@@ -1,5 +1,6 @@
 package com.kushanthsliit.shopmanagement.controller;
 
+import com.kushanthsliit.shopmanagement.dto.SumResponse;
 import com.kushanthsliit.shopmanagement.model.BusinessRecord;
 import com.kushanthsliit.shopmanagement.repository.BusinessRecordRepository;
 import com.kushanthsliit.shopmanagement.response.ApiResponse;
@@ -24,14 +25,14 @@ public class ShopController {
     @Autowired
     private BusinessRecordRepository businessRecordRepository;
 
-    @GetMapping("/startDate/{startdate}/endDate/{enddate}")
-    public double test(@PathVariable String startdate, @PathVariable String enddate){
-        /*DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return LocalDateTime.now().format(dateTimeFormatter).toString()*/;
+    /*@GetMapping("/startDate/{startdate}/endDate/{enddate}")
+    public SumResponse test(@PathVariable String startdate, @PathVariable String enddate){
+        *//*DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return LocalDateTime.now().format(dateTimeFormatter).toString()*//*;
 
-        return businessRecordRepository.getSumOfCommition(LocalDate.parse(startdate),
+        return businessRecordRepository.getSum(LocalDate.parse(startdate),
                 LocalDate.parse(enddate));
-    }
+    }*/
 
     @GetMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password){
@@ -69,5 +70,11 @@ public class ShopController {
                                                                                                  @PathVariable String endDate){
         return ResponseEntity.ok(new ApiResponse(HttpStatus.OK.value(), "Summary Retrieved Successfully.",
                 shopService.getSummary(startDate, endDate)));
+    }
+
+    @GetMapping("/getRecordsByDateRange/startDate/{startDate}/endDate/{endDate}")
+    public @ResponseBody ResponseEntity<List<BusinessRecord>> getAllRecordsByDateRange(@PathVariable String startDate,
+                                                                                       @PathVariable String endDate){
+        return ResponseEntity.ok(shopService.getAllRecordsByDateRange(startDate, endDate));
     }
 }

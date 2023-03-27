@@ -18,4 +18,6 @@ public interface ShopService {
     public String deleteRecord(long id);
 
     SummaryResponse getSummary(String startDate, String endDate);
+
+    public List<BusinessRecord> getAllRecordsByDateRange(String startDate, String endDate);
 }

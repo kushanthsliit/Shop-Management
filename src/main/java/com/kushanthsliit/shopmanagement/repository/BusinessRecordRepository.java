@@ -1,12 +1,17 @@
 package com.kushanthsliit.shopmanagement.repository;
 
+import com.kushanthsliit.shopmanagement.dto.SumResponse;
 import com.kushanthsliit.shopmanagement.model.BusinessRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
+import javax.persistence.SqlResultSetMapping;
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface BusinessRecordRepository extends JpaRepository<BusinessRecord, Long> {
@@ -102,4 +107,29 @@ public interface BusinessRecordRepository extends JpaRepository<BusinessRecord, 
                     "WHERE br.date BETWEEN :startDate AND :endDate")
     double getSumOfCommition(@Param("startDate") LocalDate startDate,
                                         @Param("endDate") LocalDate endDate);
+
+    @Query(nativeQuery = true,
+            value = "SELECT * " +
+                    "FROM public.business_record br " +
+                    "WHERE br.date BETWEEN :startDate AND :endDate")
+    List<BusinessRecord> getRecordsBetweeenDateRange(@Param("startDate") LocalDate startDate,
+                                                     @Param("endDate") LocalDate endDate);
+
+    /*@Query(nativeQuery = true,
+            value = "SELECT SUM(br.wages) AS sumOfWages, SUM(br.tobacco_sold) AS sumOfTobaccoSold " +
+                    "FROM public.business_record br " +
+                    "WHERE br.date BETWEEN :startDate AND :endDate")
+    @SqlResultSetMapping(
+            name = "SumResponse",
+            classes = @ConstructorResult(
+                    targetClass = SumResponse.class,
+                    columns = {
+                            @ColumnResult(name = "sumOfWages", type = Double.class),
+                            @ColumnResult(name = "sumOfTobaccoSold", type = Double.class)
+                    }
+            )
+    )
+    SumResponse getSum(@Param("startDate") LocalDate startDate,
+                       @Param("endDate") LocalDate endDate);*/
+
 }
