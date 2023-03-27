@@ -28,7 +28,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<BusinessRecord> getAllRecords() {
-        return businessRecordRepository.findAll();
+        return businessRecordRepository.findAllByOrderByDateDesc();
     }
 
     @Override
@@ -80,6 +80,6 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<BusinessRecord> getAllRecordsByDateRange(String startDate, String endDate) {
-        return businessRecordRepository.getRecordsBetweeenDateRange(LocalDate.parse(startDate), LocalDate.parse(endDate));
+        return businessRecordRepository.getRecordsBetweenDateRange(LocalDate.parse(startDate), LocalDate.parse(endDate));
     }
 }

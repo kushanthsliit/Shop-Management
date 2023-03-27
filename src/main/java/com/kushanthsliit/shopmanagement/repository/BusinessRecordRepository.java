@@ -14,11 +14,14 @@ public interface BusinessRecordRepository extends JpaRepository<BusinessRecord, 
 
     BusinessRecord findByDate(LocalDate date);
 
+    List<BusinessRecord> findAllByOrderByDateDesc();
+
     @Query(nativeQuery = true,
             value = "SELECT * " +
                     "FROM public.business_record br " +
-                    "WHERE br.date BETWEEN :startDate AND :endDate")
-    List<BusinessRecord> getRecordsBetweeenDateRange(@Param("startDate") LocalDate startDate,
+                    "WHERE br.date BETWEEN :startDate AND :endDate " +
+                    "ORDER BY br.date DESC ")
+    List<BusinessRecord> getRecordsBetweenDateRange(@Param("startDate") LocalDate startDate,
                                                      @Param("endDate") LocalDate endDate);
 
     @Query(nativeQuery = true,
