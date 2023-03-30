@@ -1,5 +1,6 @@
 package com.kushanthsliit.shopmanagement.controller;
 
+import com.kushanthsliit.shopmanagement.dto.getAllSums;
 import com.kushanthsliit.shopmanagement.model.BusinessRecord;
 import com.kushanthsliit.shopmanagement.repository.BusinessRecordRepository;
 import com.kushanthsliit.shopmanagement.response.ApiResponse;
@@ -59,8 +60,8 @@ public class ShopController {
     }
 
     @GetMapping("/summary/startDate/{startDate}/endDate/{endDate}")
-    public @ResponseBody ResponseEntity<ApiResponse<BusinessRecordRepository.getAllSums>> getSummaryBetweenDateRange(@PathVariable String startDate,
-                                                                                                 @PathVariable String endDate){
+    public @ResponseBody ResponseEntity<ApiResponse<getAllSums>> getSummaryBetweenDateRange(@PathVariable String startDate,
+                                                                                            @PathVariable String endDate){
         return ResponseEntity.ok(new ApiResponse(HttpStatus.OK.value(), "Summary Retrieved Successfully.",
                 shopService.getSummary(startDate, endDate)));
     }

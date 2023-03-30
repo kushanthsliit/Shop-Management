@@ -1,5 +1,6 @@
 package com.kushanthsliit.shopmanagement.service.impl;
 
+import com.kushanthsliit.shopmanagement.dto.getAllSums;
 import com.kushanthsliit.shopmanagement.model.BusinessRecord;
 import com.kushanthsliit.shopmanagement.repository.BusinessRecordRepository;
 import com.kushanthsliit.shopmanagement.service.ShopService;
@@ -74,7 +75,7 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public BusinessRecordRepository.getAllSums getSummary(String startDate, String endDate) {
+    public getAllSums getSummary(String startDate, String endDate) {
         return businessRecordRepository.getAllSumBetweenDates(LocalDate.parse(startDate), LocalDate.parse(endDate));
     }
 

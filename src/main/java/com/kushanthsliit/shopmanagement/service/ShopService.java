@@ -1,5 +1,6 @@
 package com.kushanthsliit.shopmanagement.service;
 
+import com.kushanthsliit.shopmanagement.dto.getAllSums;
 import com.kushanthsliit.shopmanagement.model.BusinessRecord;
 import com.kushanthsliit.shopmanagement.repository.BusinessRecordRepository;
 
@@ -17,7 +18,7 @@ public interface ShopService {
 
     public String deleteRecord(long id);
 
-    BusinessRecordRepository.getAllSums getSummary(String startDate, String endDate);
+    public getAllSums getSummary(String startDate, String endDate);
 
     public List<BusinessRecord> getAllRecordsByDateRange(String startDate, String endDate);
 }
