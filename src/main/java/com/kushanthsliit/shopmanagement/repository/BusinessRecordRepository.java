@@ -1,6 +1,6 @@
 package com.kushanthsliit.shopmanagement.repository;
 
-import com.kushanthsliit.shopmanagement.dto.getAllSums;
+import com.kushanthsliit.shopmanagement.dto.GetAllSums;
 import com.kushanthsliit.shopmanagement.model.BusinessRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -41,7 +41,7 @@ public interface BusinessRecordRepository extends JpaRepository<BusinessRecord, 
                     "SUM(br.commision) AS sumOfCommision " +
                     "FROM public.business_record br " +
                     "WHERE br.date BETWEEN :startDate AND :endDate")
-    getAllSums getAllSumBetweenDates(@Param("startDate") LocalDate startDate,
+    GetAllSums getAllSumBetweenDates(@Param("startDate") LocalDate startDate,
                                      @Param("endDate") LocalDate endDate);
 
 

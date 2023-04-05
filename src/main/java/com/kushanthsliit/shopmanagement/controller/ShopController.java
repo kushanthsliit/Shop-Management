@@ -1,9 +1,10 @@
 package com.kushanthsliit.shopmanagement.controller;
 
-import com.kushanthsliit.shopmanagement.dto.getAllSums;
+import com.kushanthsliit.shopmanagement.dto.GetAllSums;
 import com.kushanthsliit.shopmanagement.model.BusinessRecord;
 import com.kushanthsliit.shopmanagement.repository.BusinessRecordRepository;
 import com.kushanthsliit.shopmanagement.response.ApiResponse;
+import com.kushanthsliit.shopmanagement.response.SummaryResponse;
 import com.kushanthsliit.shopmanagement.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,8 +61,8 @@ public class ShopController {
     }
 
     @GetMapping("/summary/startDate/{startDate}/endDate/{endDate}")
-    public @ResponseBody ResponseEntity<ApiResponse<getAllSums>> getSummaryBetweenDateRange(@PathVariable String startDate,
-                                                                                            @PathVariable String endDate){
+    public @ResponseBody ResponseEntity<ApiResponse<SummaryResponse>> getSummaryBetweenDateRange(@PathVariable String startDate,
+                                                                                                 @PathVariable String endDate){
         return ResponseEntity.ok(new ApiResponse(HttpStatus.OK.value(), "Summary Retrieved Successfully.",
                 shopService.getSummary(startDate, endDate)));
     }

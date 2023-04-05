@@ -1,8 +1,10 @@
 package com.kushanthsliit.shopmanagement.service.impl;
 
-import com.kushanthsliit.shopmanagement.dto.getAllSums;
+import com.kushanthsliit.shopmanagement.dto.GetAllSums;
 import com.kushanthsliit.shopmanagement.model.BusinessRecord;
 import com.kushanthsliit.shopmanagement.repository.BusinessRecordRepository;
+import com.kushanthsliit.shopmanagement.response.ProfitsDto;
+import com.kushanthsliit.shopmanagement.response.SummaryResponse;
 import com.kushanthsliit.shopmanagement.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,8 +77,27 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public getAllSums getSummary(String startDate, String endDate) {
-        return businessRecordRepository.getAllSumBetweenDates(LocalDate.parse(startDate), LocalDate.parse(endDate));
+    public SummaryResponse getSummary(String startDate, String endDate) {
+        SummaryResponse summaryResponse = new SummaryResponse();
+        GetAllSums getAllSums = businessRecordRepository.getAllSumBetweenDates(LocalDate.parse(startDate), LocalDate.parse(endDate));
+
+        ProfitsDto profitsDto = new ProfitsDto();
+        profitsDto.setTobaccoProfit(getAllSums.getSumOfTobaccoSold() - getAllSums.getSumOfTobaccoPurchased());
+        profitsDto.setTobaccoQtyProfit(getAllSums.getSumOfTobaccoSoldQty() - getAllSums.getSumOfTobaccoPurchasedQty());
+        profitsDto.setPhoneCardsProfit(getAllSums.getSumOfPhoneCardsSold() - getAllSums.getSumOfPhoneCardsPurchased());
+        profitsDto.setShopProfit(getAllSums.getSumOfShopSales() - getAllSums.getSumOfShop());
+        profitsDto.setTotalExpenses(getAllSums.getSumOfWages() + getAllSums.getSumOfExpenses());
+        profitsDto.setTotalProfit(
+                getAllSums.getSumOfTobaccoSold() - getAllSums.getSumOfTobaccoPurchased() +
+                        getAllSums.getSumOfPhoneCardsSold() - getAllSums.getSumOfPhoneCardsPurchased() +
+                        getAllSums.getSumOfShopSales() - getAllSums.getSumOfShop() +
+                        getAllSums.getSumOfCommision() -
+                        (getAllSums.getSumOfWages() + getAllSums.getSumOfExpenses())
+        );
+
+        summaryResponse.setGetAllSums(getAllSums);
+        summaryResponse.setProfits(profitsDto);
+        return summaryResponse;
     }
 
     @Override

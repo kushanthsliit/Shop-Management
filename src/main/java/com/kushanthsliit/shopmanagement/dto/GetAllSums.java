@@ -1,6 +1,6 @@
 package com.kushanthsliit.shopmanagement.dto;
 
-public interface getAllSums {
+public interface GetAllSums {
 
     double getSumOfOysterSold();
     double getSumOfTobaccoSold();
