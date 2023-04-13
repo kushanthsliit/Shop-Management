@@ -1,9 +1,9 @@
 package com.kushanthsliit.shopmanagement.controller;
 
-import com.kushanthsliit.shopmanagement.dto.GetAllSums;
 import com.kushanthsliit.shopmanagement.model.BusinessRecord;
 import com.kushanthsliit.shopmanagement.repository.BusinessRecordRepository;
 import com.kushanthsliit.shopmanagement.response.ApiResponse;
+import com.kushanthsliit.shopmanagement.response.ChartResponse;
 import com.kushanthsliit.shopmanagement.response.SummaryResponse;
 import com.kushanthsliit.shopmanagement.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,5 +71,10 @@ public class ShopController {
     public @ResponseBody ResponseEntity<List<BusinessRecord>> getAllRecordsByDateRange(@PathVariable String startDate,
                                                                                        @PathVariable String endDate){
         return ResponseEntity.ok(shopService.getAllRecordsByDateRange(startDate, endDate));
+    }
+
+    @GetMapping("/chartData")
+    public @ResponseBody ChartResponse getChartData(){
+        return shopService.getChartData();
     }
 }

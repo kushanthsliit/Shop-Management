@@ -1,4 +1,4 @@
-package com.kushanthsliit.shopmanagement.response;
+package com.kushanthsliit.shopmanagement.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

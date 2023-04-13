@@ -44,5 +44,6 @@ public interface BusinessRecordRepository extends JpaRepository<BusinessRecord, 
     GetAllSums getAllSumBetweenDates(@Param("startDate") LocalDate startDate,
                                      @Param("endDate") LocalDate endDate);
 
+//    List<BusinessRecord> findDateBetween(LocalDate startDate, LocalDate endDate);
 
 }
